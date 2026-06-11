@@ -1,0 +1,9 @@
+[project]
+name = "strands-knocks"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "strands-agents>=1.42.0",
+    "strands-agents-tools>=0.8.0",
+]

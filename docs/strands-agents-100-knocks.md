@@ -203,7 +203,10 @@ Strands Agents (Python SDK) を基礎から本番運用まで網羅的に理解�
 │   ├── package.json
 │   └── src/
 └── docs/
-    └── strands-agents-100-knocks.md   # このファイル
+    ├── strands-agents-100-knocks.md   # このファイル
+    └── handson/
+        ├── chapter01.md               # 章ごとのハンズオン解説
+        └── ...
 ```
 
 - Python は `uv init` + `uv add strands-agents strands-agents-tools` で開始
