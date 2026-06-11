@@ -13,8 +13,8 @@ from strands import Agent
 from strands.models import BedrockModel
 
 MODEL_IDS = [
-    "global.anthropic.claude-sonnet-4-6",  # SDK のデフォルト
-    "us.amazon.nova-lite-v1:0",            # 軽量・高速なモデル
+    "global.anthropic.claude-haiku-4-5-20251001-v1:0",  # 普段使い(安い・速い)
+    "global.anthropic.claude-sonnet-4-6",                # SDK のデフォルト(高品質)
 ]
 
 PROMPT = "再帰関数を小学生にもわかるように2文で説明して。"

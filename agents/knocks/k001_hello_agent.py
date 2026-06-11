@@ -3,10 +3,12 @@
 実行: uv run knocks/k001_hello_agent.py
 """
 
+from common import make_model
+
 from strands import Agent
 
-# 引数なしの Agent() はデフォルトモデル(Bedrock の Claude)を使う。
-# 呼び出すと応答がストリーミングでそのまま標準出力に流れる。
-agent = Agent()
+# Agent() だけでも動く(その場合はデフォルトの Claude Sonnet が使われる)が、
+# このノック集ではコスト節約のため Haiku を明示する。knocks/common.py 参照。
+agent = Agent(model=make_model())
 
 agent("こんにちは!あなたは何ができますか?3行で教えて。")

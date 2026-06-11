@@ -7,9 +7,11 @@
 実行: uv run knocks/k010_result_anatomy.py
 """
 
+from common import make_model
+
 from strands import Agent
 
-agent = Agent(callback_handler=None)
+agent = Agent(model=make_model(), callback_handler=None)
 
 result = agent("日本で一番高い山は?一言で。")
 

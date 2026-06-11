@@ -25,3 +25,15 @@ Bedrock コンソールの「モデルアクセス」で Anthropic Claude を有
 ```bash
 uv run knocks/k001_hello_agent.py
 ```
+
+モデルはデフォルトで Claude Haiku 4.5(`knocks/common.py`)。
+`KNOCK_MODEL_ID` 環境変数で差し替え可能。
+
+## テスト
+
+```bash
+uv run pytest
+```
+
+AWS 認証情報は不要(モックモデルで動く)。詳細は
+[docs/handson/testing.md](../docs/handson/testing.md) を参照。

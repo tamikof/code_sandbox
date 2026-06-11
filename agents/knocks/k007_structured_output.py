@@ -6,6 +6,7 @@
 実行: uv run knocks/k007_structured_output.py
 """
 
+from common import make_model
 from pydantic import BaseModel, Field
 
 from strands import Agent
@@ -20,7 +21,7 @@ class Recipe(BaseModel):
     steps: list[str] = Field(description="手順。各ステップ1文")
 
 
-agent = Agent()
+agent = Agent(model=make_model())
 
 # 第1引数に Pydantic モデル、第2引数にプロンプト。
 # 戻り値は文字列ではなく Recipe のインスタンスになる。

@@ -25,14 +25,18 @@ export AWS_REGION=us-west-2
 📄 `knocks/k001_hello_agent.py`
 
 ```python
+from common import make_model
 from strands import Agent
 
-agent = Agent()
+agent = Agent(model=make_model())
 agent("こんにちは!あなたは何ができますか?3行で教えて。")
 ```
 
-これが Strands の全てのベースになる3行。`Agent()` は引数なしだとデフォルトモデル
-(Bedrock の Claude)に接続し、呼び出すと応答が**ストリーミングで標準出力に流れる**。
+これが Strands のベースになる形。実は `Agent()` だけでも動く(その場合はデフォルトの
+Claude Sonnet が使われる)が、このノック集ではコスト節約のため `knocks/common.py` の
+`make_model()` で **Claude Haiku 4.5**(Sonnet の約1/3の価格)を明示している。
+`KNOCK_MODEL_ID` 環境変数で別モデルへの差し替えも可能。
+呼び出すと応答が**ストリーミングで標準出力に流れる**。
 
 **観察ポイント**
 
@@ -76,12 +80,14 @@ system_prompt とユーザー指示の力関係を体感する
 from strands.models import BedrockModel
 
 model = BedrockModel(
-    model_id="global.anthropic.claude-sonnet-4-6",
+    model_id="global.anthropic.claude-haiku-4-5-20251001-v1:0",
     temperature=0.0,
     max_tokens=100,
 )
 agent = Agent(model=model)
 ```
+
+(スクリプトでは `make_model(temperature=..., max_tokens=...)` 経由で同じことをしている)
 
 スクリプトは同じ俳句プロンプトを temperature 0.0 / 1.0 ×各2回実行する。
 

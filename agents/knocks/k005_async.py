@@ -8,12 +8,14 @@
 import asyncio
 import time
 
+from common import make_model
+
 from strands import Agent
 
 
 async def ask(name: str, prompt: str) -> str:
     # 並行実行時に出力が混ざらないよう callback_handler=None でストリーミング表示を切る
-    agent = Agent(callback_handler=None)
+    agent = Agent(model=make_model(), callback_handler=None)
     result = await agent.invoke_async(prompt)
     return f"[{name}]\n{result}"
 

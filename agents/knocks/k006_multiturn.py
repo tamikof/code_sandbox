@@ -6,9 +6,11 @@
 実行: uv run knocks/k006_multiturn.py
 """
 
+from common import make_model
+
 from strands import Agent
 
-agent = Agent(callback_handler=None)
+agent = Agent(model=make_model(), callback_handler=None)
 
 print(agent("私の好きな食べ物は寿司です。覚えておいて。"))
 print(agent("私の好きな食べ物は何だったか覚えてる?"))

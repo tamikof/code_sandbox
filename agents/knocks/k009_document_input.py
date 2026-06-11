@@ -8,6 +8,8 @@
 import sys
 from pathlib import Path
 
+from common import make_model
+
 from strands import Agent
 
 if len(sys.argv) != 2:
@@ -16,7 +18,7 @@ if len(sys.argv) != 2:
 
 path = Path(sys.argv[1])
 
-agent = Agent()
+agent = Agent(model=make_model())
 
 agent(
     [
