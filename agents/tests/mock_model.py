@@ -31,6 +31,15 @@ class ToolCall:
     input: dict[str, Any]
     tool_use_id: str = "mock-tool-use-1"
 
+    def __post_init__(self):
+        # 複数ツールを同一ターンで返すとき ID が重複しないように連番を振る
+        if self.tool_use_id == "mock-tool-use-1":
+            ToolCall._counter += 1
+            self.tool_use_id = f"mock-tool-use-{ToolCall._counter}"
+
+
+ToolCall._counter = 0
+
 
 class MockModel(Model):
     """決め打ちの応答を順番に返すモデル。応答が尽きたら最後の応答を繰り返す。"""
@@ -65,14 +74,17 @@ class MockModel(Model):
 
         # 以下は Bedrock Converse API のストリームイベント形式
         yield {"messageStart": {"role": "assistant"}}
-        if isinstance(turn, ToolCall):
-            yield {
-                "contentBlockStart": {
-                    "start": {"toolUse": {"toolUseId": turn.tool_use_id, "name": turn.name}}
+        if isinstance(turn, (ToolCall, list)):
+            # ToolCall 単体 or リスト(1ターンで複数ツールを同時に呼ぶケース)
+            tool_calls = [turn] if isinstance(turn, ToolCall) else turn
+            for call in tool_calls:
+                yield {
+                    "contentBlockStart": {
+                        "start": {"toolUse": {"toolUseId": call.tool_use_id, "name": call.name}}
+                    }
                 }
-            }
-            yield {"contentBlockDelta": {"delta": {"toolUse": {"input": json.dumps(turn.input)}}}}
-            yield {"contentBlockStop": {}}
+                yield {"contentBlockDelta": {"delta": {"toolUse": {"input": json.dumps(call.input)}}}}
+                yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}
         else:
             yield {"contentBlockDelta": {"delta": {"text": turn}}}
