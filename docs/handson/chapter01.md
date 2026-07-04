@@ -263,3 +263,7 @@ uv run knocks/k009_document_input.py ./some-paper.pdf
 
 次章(第2章: ツールの基礎)では、エージェントに `@tool` で道具を持たせて、
 `cycle_count` が増える様子 — つまりエージェントループの実体 — を観察する。
+
+> 🔁 **ループ視点**: ノック10で見た `cycle_count`(何周したか)と `stop_reason`(なぜ止まったか)は、
+> 実は**ループエンジニアリング**の出発点。エージェントは「観察→行動→観察」の反復ループで、
+> この2つはその制御信号だ。詳しくは [loop-engineering.md](loop-engineering.md) と第11章。
